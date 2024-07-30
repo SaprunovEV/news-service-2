@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NewsService2Application {
 
     public static void main(String[] args) {
+
         SpringApplication.run(NewsService2Application.class, args);
     }
 
