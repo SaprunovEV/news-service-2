@@ -1,0 +1,13 @@
+{
+  "count": 2,
+  "categories": [
+    {
+      "id": 1,
+      "name": "category 1"
+    },
+    {
+      "id": 2,
+      "name": "category 2"
+    }
+  ]
+}
