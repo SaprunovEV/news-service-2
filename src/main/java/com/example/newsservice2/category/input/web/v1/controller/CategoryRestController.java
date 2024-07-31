@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/controllers")
-@Tag(name = "CONTROLLERS")
+@Tag(name = "Categories V1", description = "Categories API version V1")
 public class CategoryRestController {
 }
