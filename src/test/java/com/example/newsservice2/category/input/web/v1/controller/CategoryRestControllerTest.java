@@ -24,6 +24,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.stream.Stream;
 
+import static com.example.newsservice2.category.input.web.v1.controller.testBuilder.CategoryTestDataBuilder.aCategory;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -59,6 +60,12 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
     @ParameterizedTest
     @MethodSource("getPagination")
     void whenGetAll_ThenReturnPageSizeAndPageNumber(CategoryFilter filter) throws Exception {
+        getFacade().save(aCategory().withName("category 1"));
+        getFacade().save(aCategory().withName("category 2"));
+        getFacade().save(aCategory().withName("category 3"));
+        getFacade().save(aCategory().withName("category 4"));
+        getFacade().save(aCategory().withName("category 5"));
+
         String actual = mvc.perform(
                         get("/api/v1/category")
                                 .param("pageNumber", String.valueOf(filter.getPageNumber()))
@@ -69,6 +76,6 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
 
         String expected = StringTestUtils.readStringFromResources("/responses/web/v1/find_by_filter_"+ filter.getPageNumber() +"_response.json");
 
-        JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("books[0].id", "books[0].categoryId"));
+        JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("categories[*].id"));
     }
 }
