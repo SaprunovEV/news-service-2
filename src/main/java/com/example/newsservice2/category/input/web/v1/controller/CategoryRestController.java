@@ -40,7 +40,7 @@ public class CategoryRestController {
         return ResponseEntity.ok(mapper.entityToResponse(service.updateCategory(id.getId(), payload)));
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@Valid CategoryId id) {
         service.deleteCategory(id.getId());
         return ResponseEntity.noContent().build();
