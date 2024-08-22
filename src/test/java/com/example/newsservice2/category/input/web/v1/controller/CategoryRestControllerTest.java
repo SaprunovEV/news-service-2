@@ -27,6 +27,7 @@ import java.util.stream.Stream;
 
 import static com.example.newsservice2.category.input.web.v1.controller.testBuilder.CategoryTestDataBuilder.aCategory;
 import static com.example.newsservice2.testUtils.CategoryPayloadTestDataBuilder.aCategoryPayload;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -111,5 +112,11 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
         String expected = StringTestUtils.readStringFromResources("/responses/web/v1/update_category_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
+
+        assertAll(() -> {
+            CategoryEntity entity = getFacade().find(categoryToDatabase.getId(), CategoryEntity.class);
+            assertNotNull(entity);
+            assertEquals(entity.getName(), payload.build().getName());
+        });
     }
 }
