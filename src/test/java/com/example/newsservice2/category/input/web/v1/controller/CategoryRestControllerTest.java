@@ -102,7 +102,7 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
         CategoryEntity categoryToDatabase = getFacade().save(aCategory());
 
         String actual = mvc.perform(
-                        put("/api/v1/category/", categoryToDatabase.getId())
+                        put("/api/v1/category/{id}", categoryToDatabase.getId())
                                 .content(objectMapper.writeValueAsString(payload.build()))
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -125,7 +125,7 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
     void whenDelete_thenReturnNoContent_andDeleteCategoryFromDatabase() throws Exception {
         CategoryEntity categoryToDatabase = getFacade().save(aCategory());
 
-        mvc.perform(delete("/api/v1/category/", categoryToDatabase.getId()))
+        mvc.perform(delete("/api/v1/category/{id}",  categoryToDatabase.getId()))
                 .andExpect(status().isNoContent());
 
         assertNull(getFacade().find(categoryToDatabase.getId(), CategoryEntity.class));
