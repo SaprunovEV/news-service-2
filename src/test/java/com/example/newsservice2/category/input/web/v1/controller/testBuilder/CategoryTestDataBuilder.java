@@ -20,7 +20,9 @@ public class CategoryTestDataBuilder implements TestDataBuilder<CategoryEntity> 
 
     @Override
     public CategoryEntity build() {
-        return null;
+        CategoryEntity result = new CategoryEntity();
+        result.setName(this.name);
+        return result;
     }
 
     public CategoryTestDataBuilder withName(String name) {
