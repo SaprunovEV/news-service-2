@@ -1,6 +1,7 @@
 package com.example.newsservice2.category.input.web.v1.controller;
 
 import com.example.newsservice2.category.input.web.v1.model.CategoryFilter;
+import com.example.newsservice2.category.input.web.v1.model.CategoryPayload;
 import com.example.newsservice2.category.model.CategoryEntity;
 import com.example.newsservice2.config.AbstractIntegrationTest;
 import com.example.newsservice2.testUtils.CategoryPayloadTestDataBuilder;
@@ -78,6 +79,24 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
         return Stream.of(
                 Arguments.of(f1),
                 Arguments.of(f2)
+        );
+    }
+
+    public static Stream<Arguments> payloadData() {
+        CategoryPayload cp1 = new CategoryPayload();
+        cp1.setName("   ");
+        PayloadData p1 = new PayloadData(cp1, 1);
+
+        CategoryPayload cp2 = new CategoryPayload();
+        PayloadData p2 = new PayloadData(cp2, 2);
+
+        CategoryPayload cp3 = new CategoryPayload();
+        cp3.setName("qwer");
+        PayloadData p3 = new PayloadData(cp3, 3);
+        return Stream.of(
+                Arguments.of(p1),
+                Arguments.of(p2),
+                Arguments.of(p3)
         );
     }
 
@@ -194,4 +213,19 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
 
         JsonAssert.assertJsonEquals(expected, actual);
     }
+
+    @ParameterizedTest
+    @MethodSource("payloadData")
+    void whenCategoryPayloadValidError_thenReturnError(PayloadData payload) throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/v1/category")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(payload.payload)))
+                .andExpect(status().isBadRequest()).andReturn().getResponse();
+
+        response.setCharacterEncoding("UTF-8");
+        assertNotNull(response.getContentAsString());
+        assertFalse(response.getContentAsString().trim().isEmpty());
+    }
+    private record PayloadData (CategoryPayload payload, int number){}
 }
