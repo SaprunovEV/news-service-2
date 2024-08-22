@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/controllers")
+@RequestMapping("/api/v1/category")
 @Tag(name = "Categories V1", description = "Categories API version V1")
 @Slf4j
 @RequiredArgsConstructor
