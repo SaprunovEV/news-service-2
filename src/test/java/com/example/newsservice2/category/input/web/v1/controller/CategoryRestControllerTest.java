@@ -119,4 +119,15 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
             assertEquals(entity.getName(), payload.build().getName());
         });
     }
+
+
+    @Test
+    void whenDelete_thenReturnNoContent_andDeleteCategoryFromDatabase() throws Exception {
+        CategoryEntity categoryToDatabase = getFacade().save(aCategory());
+
+        mvc.perform(delete("/api/v1/category/", categoryToDatabase.getId()))
+                .andExpect(status().isNoContent());
+
+        assertNull(getFacade().find(categoryToDatabase.getId(), CategoryEntity.class));
+    }
 }
