@@ -1,6 +1,7 @@
 package com.example.newsservice2.category.input.web.v1.controller;
 
 import com.example.newsservice2.category.input.web.v1.model.CategoryFilter;
+import com.example.newsservice2.category.input.web.v1.model.CategoryId;
 import com.example.newsservice2.category.input.web.v1.model.CategoryPayload;
 import com.example.newsservice2.category.model.CategoryEntity;
 import com.example.newsservice2.config.AbstractIntegrationTest;
@@ -97,6 +98,14 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
                 Arguments.of(p1),
                 Arguments.of(p2),
                 Arguments.of(p3)
+        );
+    }
+
+    public static Stream<Arguments> getCategoryId() {
+        CategoryId id1 = new CategoryId();
+        id1.setId(-1L);
+        return Stream.of(
+                Arguments.of(id1)
         );
     }
 
@@ -227,5 +236,16 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
         assertNotNull(response.getContentAsString());
         assertFalse(response.getContentAsString().trim().isEmpty());
     }
+
+    @ParameterizedTest
+    @MethodSource("getCategoryId")
+    void whenCategoryIdValidError_thenReturnError(CategoryId id) throws Exception {
+        String actual = mvc.perform(delete("/api/v1/category/{id}", id.getId()))
+                .andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+
+        assertNotNull(actual);
+        assertFalse(actual.trim().isEmpty());
+    }
+
     private record PayloadData (CategoryPayload payload, int number){}
 }
