@@ -1,6 +1,7 @@
 package com.example.newsservice2.category.service;
 
 import com.example.newsservice2.category.input.web.v1.model.CategoryFilter;
+import com.example.newsservice2.category.input.web.v1.model.CategoryPayload;
 import com.example.newsservice2.category.model.CategoryEntity;
 import com.example.newsservice2.config.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,22 @@ class CategoryServiceTest extends AbstractIntegrationTest {
             assertNotNull(actual);
             assertFalse(actual.isEmpty());
             assertEquals(3, actual.size());
+        });
+    }
+
+    @Test
+    void whenCreateNewCategory_ThenSaveCategoryIntoDatabase_andReturnCategory() throws Exception {
+        CategoryPayload payload = new CategoryPayload();
+        payload.setName("new_category_name");
+
+        CategoryEntity actual = service.createNewCategory(payload);
+
+        assertAll(() -> {
+            assertNotNull(actual);
+            assertEquals(payload.getName(), actual.getName());
+            CategoryEntity entity = getFacade().find(actual.getId(), CategoryEntity.class);
+
+            assertEquals(payload.getName(), entity.getName());
         });
     }
 }

@@ -23,7 +23,9 @@ public class DatabaseCategoryService implements CategoryService {
 
     @Override
     public CategoryEntity createNewCategory(CategoryPayload payload) {
-        return null;
+        CategoryEntity result = new CategoryEntity();
+        result.setName(payload.getName());
+        return repository.save(result);
     }
 
     @Override
