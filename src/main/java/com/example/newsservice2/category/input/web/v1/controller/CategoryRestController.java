@@ -20,7 +20,7 @@ public class CategoryRestController {
     private final CategoryService service;
     private final CategoryMapper mapper;
     @GetMapping()
-    public ResponseEntity<CategoryListResponse> findAllCategory(@RequestParam @Valid CategoryFilter filter) {
+    public ResponseEntity<CategoryListResponse> findAllCategory(@Valid CategoryFilter filter) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 mapper.entityListToResponseList(service.getByFilter(filter))
         );
