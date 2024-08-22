@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTypeExcludeFil
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -57,6 +58,29 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
         );
     }
 
+    public static Stream<Arguments> getNegativePageNumber() {
+        CategoryFilter f1 = new CategoryFilter();
+        f1.setPageSize(1);
+        f1.setPageNumber(-1);
+
+        return Stream.of(
+                Arguments.of(f1)
+        );
+    }
+
+    public static Stream<Arguments> getNegativePageSize() {
+        CategoryFilter f1 = new CategoryFilter();
+        f1.setPageSize(-1);
+        f1.setPageNumber(1);
+        CategoryFilter f2 = new CategoryFilter();
+        f2.setPageSize(0);
+        f2.setPageNumber(1);
+        return Stream.of(
+                Arguments.of(f1),
+                Arguments.of(f2)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("getPagination")
     void whenGetAll_ThenReturnPageSizeAndPageNumber(CategoryFilter filter) throws Exception {
@@ -74,7 +98,7 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
 
-        String expected = StringTestUtils.readStringFromResources("/category/web/v1/find_by_filter_"+ filter.getPageNumber() +"_response.json");
+        String expected = StringTestUtils.readStringFromResources("/response/category/web/v1/find_by_filter_" + filter.getPageNumber() + "_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("categories[*].id"));
     }
@@ -91,7 +115,7 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
 
-        String expected = StringTestUtils.readStringFromResources("/category/web/v1/create_new_category_response.json");
+        String expected = StringTestUtils.readStringFromResources("/response/category/web/v1/create_new_category_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
     }
@@ -109,7 +133,7 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
 
-        String expected = StringTestUtils.readStringFromResources("/category/web/v1/update_category_response.json");
+        String expected = StringTestUtils.readStringFromResources("/response/category/web/v1/update_category_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
 
@@ -125,9 +149,49 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
     void whenDelete_thenReturnNoContent_andDeleteCategoryFromDatabase() throws Exception {
         CategoryEntity categoryToDatabase = getFacade().save(aCategory());
 
-        mvc.perform(delete("/api/v1/category/{id}",  categoryToDatabase.getId()))
+        mvc.perform(delete("/api/v1/category/{id}", categoryToDatabase.getId()))
                 .andExpect(status().isNoContent());
 
         assertNull(getFacade().find(categoryToDatabase.getId(), CategoryEntity.class));
+    }
+
+    @ParameterizedTest
+    @MethodSource("getNegativePageNumber")
+    void whenPageNumberIsNegative_thenReturnError(CategoryFilter filter) throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/v1/category")
+                                .param("pageNumber", String.valueOf(filter.getPageNumber()))
+                                .param("pageSize", String.valueOf(filter.getPageSize())))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse();
+
+        response.setCharacterEncoding("UTF-8");
+
+        String actual = response.getContentAsString();
+
+        String expected = StringTestUtils.
+                readStringFromResources("/response/category/web/v1/error_pageNumber_response.json");
+
+        JsonAssert.assertJsonEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getNegativePageSize")
+    void whenPageSizeIsNegative_orIsZero_thenReturnError(CategoryFilter filter) throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/v1/category")
+                                .param("pageNumber", String.valueOf(filter.getPageNumber()))
+                                .param("pageSize", String.valueOf(filter.getPageSize())))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse();
+
+        response.setCharacterEncoding("UTF-8");
+
+        String actual = response.getContentAsString();
+
+        String expected = StringTestUtils.
+                readStringFromResources("/response/category/web/v1/error_pageSize_response.json");
+
+        JsonAssert.assertJsonEquals(expected, actual);
     }
 }
