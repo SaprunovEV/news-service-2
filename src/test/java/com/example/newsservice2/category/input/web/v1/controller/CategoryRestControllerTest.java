@@ -74,7 +74,7 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
 
-        String expected = StringTestUtils.readStringFromResources("/responses/web/v1/find_by_filter_"+ filter.getPageNumber() +"_response.json");
+        String expected = StringTestUtils.readStringFromResources("/category/web/v1/find_by_filter_"+ filter.getPageNumber() +"_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("categories[*].id"));
     }
@@ -91,7 +91,7 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
 
-        String expected = StringTestUtils.readStringFromResources("/responses/web/v1/create_new_category_response.json");
+        String expected = StringTestUtils.readStringFromResources("/category/web/v1/create_new_category_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
     }
@@ -109,7 +109,7 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
 
-        String expected = StringTestUtils.readStringFromResources("/responses/web/v1/update_category_response.json");
+        String expected = StringTestUtils.readStringFromResources("/category/web/v1/update_category_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
 
