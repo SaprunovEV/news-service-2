@@ -1,6 +1,7 @@
 package com.example.newsservice2.category.input.web.v1.controller;
 
 import com.example.newsservice2.category.input.web.v1.model.CategoryFilter;
+import com.example.newsservice2.category.model.CategoryEntity;
 import com.example.newsservice2.config.AbstractIntegrationTest;
 import com.example.newsservice2.testUtils.CategoryPayloadTestDataBuilder;
 import com.example.newsservice2.testUtils.StringTestUtils;
@@ -26,8 +27,7 @@ import java.util.stream.Stream;
 
 import static com.example.newsservice2.category.input.web.v1.controller.testBuilder.CategoryTestDataBuilder.aCategory;
 import static com.example.newsservice2.testUtils.CategoryPayloadTestDataBuilder.aCategoryPayload;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -91,6 +91,24 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
                 .getContentAsString();
 
         String expected = StringTestUtils.readStringFromResources("/responses/web/v1/create_new_category_response.json");
+
+        JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
+    }
+
+    @Test
+    void whenUpdateCategory_thenReturnCategoryWithNewName() throws Exception {
+        CategoryPayloadTestDataBuilder payload = aCategoryPayload().withName("new_category_name");
+        CategoryEntity categoryToDatabase = getFacade().save(aCategory());
+
+        String actual = mvc.perform(
+                        put("/api/v1/category/", categoryToDatabase.getId())
+                                .content(objectMapper.writeValueAsString(payload.build()))
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse()
+                .getContentAsString();
+
+        String expected = StringTestUtils.readStringFromResources("/responses/web/v1/update_category_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
     }
