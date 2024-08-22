@@ -13,4 +13,8 @@ class CategoryServiceTest extends AbstractIntegrationTest {
     @Autowired
     private CategoryService service;
 
+    @Test
+    void shouldDoSomething() throws Exception {
+
+    }
 }
