@@ -60,4 +60,20 @@ class CategoryServiceTest extends AbstractIntegrationTest {
             assertEquals(payload.getName(), entity.getName());
         });
     }
+
+    @Test
+    void whenUpdateCategory_thenSaveChange_andReturnUpdatedCategory() throws Exception {
+        CategoryEntity oldCategory = getFacade().save(aCategory());
+        CategoryPayload payload = new CategoryPayload();
+
+        payload.setName("new_category_name");
+        CategoryEntity actual = service.updateCategory(oldCategory.getId(), payload);
+
+        assertAll(() -> {
+            assertNotNull(actual);
+            assertEquals(payload.getName(), actual.getName());
+            assertEquals(oldCategory.getId(), actual.getId());
+            assertEquals(getFacade().find(oldCategory.getId(), CategoryEntity.class).getName(), payload.getName());
+        });
+    }
 }
