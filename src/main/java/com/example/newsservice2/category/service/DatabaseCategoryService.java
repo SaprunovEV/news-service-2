@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ public class DatabaseCategoryService implements CategoryService {
         newEntity.setName(payload.getName());
 
         if (optional.isEmpty()) {
-            throw new CategoryEntityNotFound();
+            throw new CategoryEntityNotFound(MessageFormat.format("Категория с id: {0} не найдена!", id));
         }
         CategoryEntity oldEntity = optional.get();
 

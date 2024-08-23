@@ -28,6 +28,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.Random;
 import java.util.stream.Stream;
 
 import static com.example.newsservice2.testUtils.testBuilder.CategoryTestDataBuilder.aCategory;
@@ -176,6 +177,23 @@ class CategoryRestControllerTest extends AbstractIntegrationTest {
         });
     }
 
+    @Test
+    void whenUpdateCategoryWhatNotExists_thenReturnError() throws Exception {
+        CategoryPayloadTestDataBuilder payload = aCategoryPayload().withName("new_category_name");
+
+        long id = new Random().nextLong();
+
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/v1/category/{id}", id)
+                                .content(objectMapper.writeValueAsString(payload.build()))
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse();
+
+        response.setCharacterEncoding("UTF-8");
+        assertNotNull(response.getContentAsString());
+        assertFalse(response.getContentAsString().trim().isEmpty());
+    }
 
     @Test
     void whenDelete_thenReturnNoContent_andDeleteCategoryFromDatabase() throws Exception {
