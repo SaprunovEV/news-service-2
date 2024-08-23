@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +31,24 @@ public class DatabaseCategoryService implements CategoryService {
 
     @Override
     public CategoryEntity updateCategory(Long id, CategoryPayload payload) {
-        return null;
+        Optional<CategoryEntity> optional = repository.findById(id);
+
+        CategoryEntity newEntity = new CategoryEntity();
+        newEntity.setName(payload.getName());
+
+        if (optional.isEmpty()) {
+            throw new CategoryEntityNotFound();
+        }
+        CategoryEntity oldEntity = optional.get();
+
+        oldEntity.update(newEntity);
+
+        repository.save(oldEntity);
+        return oldEntity;
     }
 
     @Override
     public void deleteCategory(Long id) {
-
+        repository.deleteById(id);
     }
 }

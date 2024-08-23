@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
+import java.util.Random;
 
 import static com.example.newsservice2.category.input.web.v1.controller.testBuilder.CategoryTestDataBuilder.aCategory;
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,5 +76,25 @@ class CategoryServiceTest extends AbstractIntegrationTest {
             assertEquals(oldCategory.getId(), actual.getId());
             assertEquals(getFacade().find(oldCategory.getId(), CategoryEntity.class).getName(), payload.getName());
         });
+    }
+
+    @Test
+    void whenUpdateCategory_andCategoryIsNotExists_ThrowError() throws Exception {
+        CategoryPayload payload = new CategoryPayload();
+        payload.setName("new_category_name");
+
+        long id = new Random().nextLong();
+
+        assertThrows(CategoryEntityNotFound.class, () -> service.updateCategory(id, payload));
+        assertNull(getFacade().find(id, CategoryEntity.class));
+    }
+
+    @Test
+    void whenDeleteCategory_thenDeleteCategoryFromDatabase() throws Exception {
+        Long id = getFacade().save(aCategory()).getId();
+
+        service.deleteCategory(id);
+
+        assertNull(getFacade().find(id, CategoryEntity.class));
     }
 }
