@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.List;
 import java.util.Random;
 
-import static com.example.newsservice2.category.input.web.v1.controller.testBuilder.CategoryTestDataBuilder.aCategory;
+import static com.example.newsservice2.testUtils.testBuilder.CategoryTestDataBuilder.aCategory;
 import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

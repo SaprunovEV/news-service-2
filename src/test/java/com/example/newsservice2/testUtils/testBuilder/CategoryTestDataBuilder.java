@@ -1,4 +1,4 @@
-package com.example.newsservice2.category.input.web.v1.controller.testBuilder;
+package com.example.newsservice2.testUtils.testBuilder;
 
 import com.example.newsservice2.category.model.CategoryEntity;
 import com.example.newsservice2.testUtils.TestDataBuilder;

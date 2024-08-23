@@ -30,7 +30,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.stream.Stream;
 
-import static com.example.newsservice2.category.input.web.v1.controller.testBuilder.CategoryTestDataBuilder.aCategory;
+import static com.example.newsservice2.testUtils.testBuilder.CategoryTestDataBuilder.aCategory;
 import static com.example.newsservice2.testUtils.CategoryPayloadTestDataBuilder.aCategoryPayload;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
