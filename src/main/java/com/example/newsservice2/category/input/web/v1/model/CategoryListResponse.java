@@ -7,11 +7,11 @@ import java.util.List;
 public class CategoryListResponse {
 
     private final int count;
-    private final List<CategoryResponse> categoryResponses;
+    private final List<CategoryResponse> categories;
 
     public CategoryListResponse(List<CategoryResponse> categoryResponses) {
 
-        this.categoryResponses = categoryResponses;
+        this.categories = categoryResponses;
         this.count = categoryResponses.size();
     }
 }
