@@ -1,10 +1,6 @@
 {
-  "count": 3,
+  "count": 2,
   "categories": [
-    {
-      "id": 3,
-      "name": "category 3"
-    },
     {
       "id": 4,
       "name": "category 4"
