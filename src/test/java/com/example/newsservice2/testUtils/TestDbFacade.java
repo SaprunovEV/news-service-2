@@ -54,7 +54,7 @@ public class TestDbFacade {
         transactionTemplate.execute(status -> {
             JdbcTestUtils.deleteFromTables(
                     jdbcTemplate,
-                    "user",
+                    "usr",
                     "category"
             );
 
