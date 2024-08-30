@@ -10,9 +10,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import java.lang.annotation.Retention;
 
-import static java.lang.annotation.RetentionPolicy.SOURCE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Retention(SOURCE)
+@Retention(RUNTIME)
 @Operation(
         summary = "Get category with pagination.",
         tags = {"categories", "V1"},
