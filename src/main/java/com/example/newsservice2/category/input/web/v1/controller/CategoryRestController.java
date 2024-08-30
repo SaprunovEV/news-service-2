@@ -1,6 +1,7 @@
 package com.example.newsservice2.category.input.web.v1.controller;
 
 import com.example.newsservice2.category.input.web.v1.annotation.CreateCategoryDock;
+import com.example.newsservice2.category.input.web.v1.annotation.DeleteCategoryDock;
 import com.example.newsservice2.category.input.web.v1.annotation.UpdateCategoryDock;
 import com.example.newsservice2.category.input.web.v1.annotation.openApi.GetAllCategoryDock;
 import com.example.newsservice2.category.input.web.v1.model.*;
@@ -47,6 +48,7 @@ public class CategoryRestController {
     }
 
     @DeleteMapping("/{id}")
+    @DeleteCategoryDock
     public ResponseEntity<Void> deleteCategory(@Valid CategoryId id) {
         service.deleteCategory(id.getId());
         return ResponseEntity.noContent().build();
