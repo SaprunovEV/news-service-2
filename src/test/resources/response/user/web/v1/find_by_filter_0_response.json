@@ -1,0 +1,15 @@
+{
+  "count": 2,
+  "users": [
+    {
+      "id": 0,
+      "nickName": "Vasya",
+      "email": "test1@email.test"
+    },
+    {
+      "id": 1,
+      "nickName": "Vasya",
+      "email": "test2@email.test"
+    }
+  ]
+}
