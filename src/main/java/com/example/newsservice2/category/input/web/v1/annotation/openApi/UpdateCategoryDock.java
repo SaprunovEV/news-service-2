@@ -1,4 +1,4 @@
-package com.example.newsservice2.category.input.web.v1.annotation;
+package com.example.newsservice2.category.input.web.v1.annotation.openApi;
 
 import com.example.newsservice2.category.input.web.v1.model.CategoryErrorResponse;
 import com.example.newsservice2.category.input.web.v1.model.CategoryPayload;
