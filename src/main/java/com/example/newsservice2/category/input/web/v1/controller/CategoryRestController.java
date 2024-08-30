@@ -1,5 +1,6 @@
 package com.example.newsservice2.category.input.web.v1.controller;
 
+import com.example.newsservice2.category.input.web.v1.annotation.CreateCategoryDock;
 import com.example.newsservice2.category.input.web.v1.annotation.openApi.GetAllCategoryDock;
 import com.example.newsservice2.category.input.web.v1.model.*;
 import com.example.newsservice2.category.mapper.CategoryMapper;
@@ -29,6 +30,7 @@ public class CategoryRestController {
     }
 
     @PostMapping
+    @CreateCategoryDock
     public ResponseEntity<CategoryResponse> createCategory(@RequestBody @Valid CategoryPayload payload) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 mapper.entityToResponse(service.createNewCategory(payload))
