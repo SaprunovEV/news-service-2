@@ -1,5 +1,6 @@
 package com.example.newsservice2.category.input.web.v1.controller;
 
+import com.example.newsservice2.category.input.web.v1.annotation.openApi.GetAllCategoryDock;
 import com.example.newsservice2.category.input.web.v1.model.*;
 import com.example.newsservice2.category.mapper.CategoryMapper;
 import com.example.newsservice2.category.service.CategoryService;
@@ -20,6 +21,7 @@ public class CategoryRestController {
     private final CategoryService service;
     private final CategoryMapper mapper;
     @GetMapping()
+    @GetAllCategoryDock
     public ResponseEntity<CategoryListResponse> findAllCategory(@Valid CategoryFilter filter) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 mapper.entityListToResponseList(service.getByFilter(filter))
