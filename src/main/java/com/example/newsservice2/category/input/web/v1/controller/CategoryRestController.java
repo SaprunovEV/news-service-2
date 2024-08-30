@@ -1,6 +1,7 @@
 package com.example.newsservice2.category.input.web.v1.controller;
 
 import com.example.newsservice2.category.input.web.v1.annotation.CreateCategoryDock;
+import com.example.newsservice2.category.input.web.v1.annotation.UpdateCategoryDock;
 import com.example.newsservice2.category.input.web.v1.annotation.openApi.GetAllCategoryDock;
 import com.example.newsservice2.category.input.web.v1.model.*;
 import com.example.newsservice2.category.mapper.CategoryMapper;
@@ -38,6 +39,7 @@ public class CategoryRestController {
     }
 
     @PutMapping("/{id}")
+    @UpdateCategoryDock
     public ResponseEntity<CategoryResponse> updateCategory(
             @Valid CategoryId id,
             @RequestBody @Valid CategoryPayload payload) {
