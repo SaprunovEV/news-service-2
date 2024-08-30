@@ -1,5 +1,9 @@
 package com.example.newsservice2.category.input.web.v1.controller;
 
+import com.example.newsservice2.category.input.web.v1.annotation.openApi.CreateCategoryDock;
+import com.example.newsservice2.category.input.web.v1.annotation.openApi.DeleteCategoryDock;
+import com.example.newsservice2.category.input.web.v1.annotation.openApi.UpdateCategoryDock;
+import com.example.newsservice2.category.input.web.v1.annotation.openApi.GetAllCategoryDock;
 import com.example.newsservice2.category.input.web.v1.model.*;
 import com.example.newsservice2.category.mapper.CategoryMapper;
 import com.example.newsservice2.category.service.CategoryService;
@@ -20,6 +24,7 @@ public class CategoryRestController {
     private final CategoryService service;
     private final CategoryMapper mapper;
     @GetMapping()
+    @GetAllCategoryDock
     public ResponseEntity<CategoryListResponse> findAllCategory(@Valid CategoryFilter filter) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 mapper.entityListToResponseList(service.getByFilter(filter))
@@ -27,6 +32,7 @@ public class CategoryRestController {
     }
 
     @PostMapping
+    @CreateCategoryDock
     public ResponseEntity<CategoryResponse> createCategory(@RequestBody @Valid CategoryPayload payload) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 mapper.entityToResponse(service.createNewCategory(payload))
@@ -34,6 +40,7 @@ public class CategoryRestController {
     }
 
     @PutMapping("/{id}")
+    @UpdateCategoryDock
     public ResponseEntity<CategoryResponse> updateCategory(
             @Valid CategoryId id,
             @RequestBody @Valid CategoryPayload payload) {
@@ -41,6 +48,7 @@ public class CategoryRestController {
     }
 
     @DeleteMapping("/{id}")
+    @DeleteCategoryDock
     public ResponseEntity<Void> deleteCategory(@Valid CategoryId id) {
         service.deleteCategory(id.getId());
         return ResponseEntity.noContent().build();
