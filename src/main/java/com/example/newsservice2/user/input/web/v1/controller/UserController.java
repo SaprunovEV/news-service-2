@@ -2,14 +2,15 @@ package com.example.newsservice2.user.input.web.v1.controller;
 
 import com.example.newsservice2.user.input.web.v1.model.UserFilter;
 import com.example.newsservice2.user.input.web.v1.model.UserListResponse;
+import com.example.newsservice2.user.input.web.v1.model.UserPayload;
+import com.example.newsservice2.user.input.web.v1.model.UserResponse;
 import com.example.newsservice2.user.mapper.UserMapper;
 import com.example.newsservice2.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -20,5 +21,12 @@ public class UserController {
     @GetMapping
     public ResponseEntity<UserListResponse> getAllUser(@Valid UserFilter filter) {
         return ResponseEntity.ok(mapper.listEntitiesToResponseList(service.findAll(filter)));
+    }
+
+    @PostMapping
+    public ResponseEntity<UserResponse> createNewUser(@RequestBody @Valid UserPayload payload) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                mapper.entityToResponse(service.createUser(payload))
+        );
     }
 }
