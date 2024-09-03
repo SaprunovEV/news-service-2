@@ -10,4 +10,6 @@ public interface UserService {
     List<UserEntity> findAll(UserFilter filter);
 
     UserEntity createUser(UserPayload payload);
+
+    UserEntity updateUser(Long id, UserEntity payload);
 }

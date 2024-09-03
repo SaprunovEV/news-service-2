@@ -14,4 +14,9 @@ public class UserEntity {
     private Long id;
     private String email;
     private String nickName;
+
+    public void update(UserEntity payload) {
+        this.email = payload.email;
+        this.nickName = payload.nickName;
+    }
 }
