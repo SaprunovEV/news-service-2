@@ -80,6 +80,19 @@ class UserControllerTest extends AbstractIntegrationTest {
                 Arguments.of(f2)
         );
     }
+    public static Stream<Arguments> payloadData() {
+        UserPayload p1 = new UserPayload();
+        p1.setNickName("    ");
+        p1.setEmail("test@email.test");
+        UserPayload p2 = new UserPayload();
+        p2.setNickName(null);
+        p2.setEmail("test@email.test");
+        return Stream.of(
+                Arguments.of(p1),
+                Arguments.of(p2)
+        );
+    }
+
 
     @ParameterizedTest
     @MethodSource("getPagination")
@@ -228,5 +241,19 @@ class UserControllerTest extends AbstractIntegrationTest {
         String expected = StringTestUtils.readStringFromResources("/response/user/web/v1/email_error_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @MethodSource("payloadData")
+    void whenUserPayloadValidError_thenReturnError(UserPayload payload) throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/v1/user")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isBadRequest()).andReturn().getResponse();
+
+        response.setCharacterEncoding("UTF-8");
+        assertNotNull(response.getContentAsString());
+        assertFalse(response.getContentAsString().trim().isEmpty());
     }
 }
