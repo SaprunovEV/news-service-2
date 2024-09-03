@@ -120,4 +120,10 @@ class UserControllerTest extends AbstractIntegrationTest {
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
     }
+
+    @Test
+    void whenDelete_thanReturnNoContent() throws Exception {
+        mvc.perform(delete("/api/v1/user/{id}", 1))
+                .andExpect(status().isNoContent());
+    }
 }

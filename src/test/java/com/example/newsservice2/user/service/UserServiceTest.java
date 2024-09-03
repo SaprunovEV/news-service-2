@@ -76,6 +76,16 @@ class UserServiceTest extends AbstractIntegrationTest {
             assertUserEquals(newUser, actual);
         });
     }
+
+    @Test
+    void whenDelete_thenDeleteUserFromDatabase() throws Exception {
+        UserEntity saved = getFacade().save(aUser());
+
+        service.deleteUser(saved.getId());
+
+        assertNull(getFacade().find(saved.getId(), UserEntity.class));
+    }
+
     private void assertUserEquals(UserEntity payload, UserEntity actual) {
         assertAll(() -> {
             assertEquals(payload.getNickName(), actual.getNickName());
