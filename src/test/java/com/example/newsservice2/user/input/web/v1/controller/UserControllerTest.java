@@ -207,4 +207,26 @@ class UserControllerTest extends AbstractIntegrationTest {
         assertNotNull(response.getContentAsString());
         assertFalse(response.getContentAsString().trim().isEmpty());
     }
+
+    @Test
+    void whenEmailIsNotValid_thenReturnError() throws Exception {
+        UserPayload payload = new UserPayload();
+        payload.setNickName("Vasya");
+        payload.setEmail("asd");
+
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/v1/user")
+                                .content(objectMapper.writeValueAsString(payload))
+                                .contentType(APPLICATION_JSON)
+                ).andExpect(status().isBadRequest())
+                .andReturn().getResponse();
+
+        response.setCharacterEncoding("UTF-8");
+
+        String actual = response.getContentAsString();
+
+        String expected = StringTestUtils.readStringFromResources("/response/user/web/v1/email_error_response.json");
+
+        JsonAssert.assertJsonEquals(expected, actual);
+    }
 }
