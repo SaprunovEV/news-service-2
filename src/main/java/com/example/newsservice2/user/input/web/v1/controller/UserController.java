@@ -31,4 +31,10 @@ public class UserController {
     public ResponseEntity<UserResponse> updateUser(@Valid UserId id, @RequestBody @Valid UserPayload payload) {
         return ResponseEntity.ok(mapper.entityToResponse(service.updateUser(id.getId(), mapper.payloadToEntity(payload))));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@Valid UserId id) {
+        service.deleteUser(id.getId());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
