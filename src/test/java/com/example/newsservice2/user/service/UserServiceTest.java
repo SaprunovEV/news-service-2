@@ -61,6 +61,29 @@ class UserServiceTest extends AbstractIntegrationTest {
         });
     }
 
+    @Test
+    void whenUpdateUser_thenSaveNewDataToDatabase() throws Exception {
+        UserEntity oldUser = getFacade().save(aUser());
+
+        UserEntity newUser = aUser()
+                .withEmail("test2@email.test")
+                .withNickName("Ne Vasya")
+                .build();
+
+        UserEntity result = service.updateUser(oldUser.getId(), newUser);
+
+        assertAll(() -> {
+            assertNotNull(result);
+            UserEntity actual = getFacade().find(oldUser.getId(), UserEntity.class);
+            assertUserEquals(newUser, actual);
+        });
+    }
+    private void assertUserEquals(UserEntity payload, UserEntity actual) {
+        assertAll(() -> {
+            assertEquals(payload.getNickName(), actual.getNickName());
+            assertEquals(payload.getEmail(), actual.getEmail());
+        });
+    }
     private void assertUserEquals(UserPayload payload, UserEntity actual) {
         assertAll(() -> {
             assertEquals(payload.getNickName(), actual.getNickName());

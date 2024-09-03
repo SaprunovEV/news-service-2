@@ -4,6 +4,7 @@ import com.example.newsservice2.config.AbstractIntegrationTest;
 import com.example.newsservice2.testUtils.StringTestUtils;
 import com.example.newsservice2.user.input.web.v1.model.UserFilter;
 import com.example.newsservice2.user.input.web.v1.model.UserPayload;
+import com.example.newsservice2.user.model.UserEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import net.javacrumbs.jsonunit.JsonAssert;
@@ -27,8 +28,7 @@ import java.util.stream.Stream;
 
 import static com.example.newsservice2.testUtils.testBuilder.UserTestDataBuilder.aUser;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -96,6 +96,27 @@ class UserControllerTest extends AbstractIntegrationTest {
 
         String expected = StringTestUtils
                 .readStringFromResources("/response/user/web/v1/create_new_category_response.json");
+
+        JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
+    }
+
+    @Test
+    void whenUpdateUser_thenReturnUpdatedUser() throws Exception {
+        UserEntity aldUser = getFacade().save(aUser());
+
+        UserPayload payload = new UserPayload();
+        payload.setNickName("Ne Vasya");
+        payload.setEmail("test2@email.test");
+
+        String actual = mvc.perform(
+                        put("/api/v1/user/{id}", aldUser.getId())
+                                .contentType(APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isOk()).andReturn()
+                .getResponse().getContentAsString();
+
+        String expected = StringTestUtils
+                .readStringFromResources("/response/user/web/v1/update_user_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("id"));
     }
