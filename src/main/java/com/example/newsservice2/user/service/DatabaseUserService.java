@@ -38,4 +38,9 @@ public class DatabaseUserService implements UserService {
         user.update(payload);
         return repository.save(user);
     }
+
+    @Override
+    public void deleteUser(Long id) {
+        repository.deleteById(id);
+    }
 }

@@ -11,4 +11,6 @@ public interface UserService {
     UserEntity createUser(UserEntity payload);
 
     UserEntity updateUser(Long id, UserEntity payload);
+
+    void deleteUser(Long id);
 }
