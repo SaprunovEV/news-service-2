@@ -4,6 +4,7 @@ import com.example.newsservice2.category.input.web.v1.model.CategoryFilter;
 import com.example.newsservice2.config.AbstractIntegrationTest;
 import com.example.newsservice2.testUtils.StringTestUtils;
 import com.example.newsservice2.user.input.web.v1.model.UserFilter;
+import com.example.newsservice2.user.input.web.v1.model.UserId;
 import com.example.newsservice2.user.input.web.v1.model.UserPayload;
 import com.example.newsservice2.user.model.UserEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,6 +91,18 @@ class UserControllerTest extends AbstractIntegrationTest {
         return Stream.of(
                 Arguments.of(p1),
                 Arguments.of(p2)
+        );
+    }
+
+    public static Stream<Arguments> getId() {
+        UserId id1 = new UserId();
+        id1.setId(0L);
+
+        UserId id2 = new UserId();
+        id2.setId(-1L);
+        return Stream.of(
+                Arguments.of(id1),
+                Arguments.of(id2)
         );
     }
 
@@ -251,6 +264,25 @@ class UserControllerTest extends AbstractIntegrationTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(payload)))
                 .andExpect(status().isBadRequest()).andReturn().getResponse();
+
+        response.setCharacterEncoding("UTF-8");
+        assertNotNull(response.getContentAsString());
+        assertFalse(response.getContentAsString().trim().isEmpty());
+    }
+
+    @ParameterizedTest
+    @MethodSource("getId")
+    void whenIdNotCorrect_thenReturnError(UserId id) throws Exception {
+        UserPayload payload = new UserPayload();
+        payload.setEmail("test@email.test");
+        payload.setNickName("Vasya");
+
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/v1/user/{id}", id.getId())
+                                .contentType(APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse();
 
         response.setCharacterEncoding("UTF-8");
         assertNotNull(response.getContentAsString());
