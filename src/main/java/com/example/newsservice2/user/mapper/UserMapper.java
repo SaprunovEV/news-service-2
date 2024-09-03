@@ -1,6 +1,7 @@
 package com.example.newsservice2.user.mapper;
 
 import com.example.newsservice2.user.input.web.v1.model.UserListResponse;
+import com.example.newsservice2.user.input.web.v1.model.UserPayload;
 import com.example.newsservice2.user.input.web.v1.model.UserResponse;
 import com.example.newsservice2.user.model.UserEntity;
 import org.mapstruct.Mapper;
@@ -18,4 +19,6 @@ public interface UserMapper {
     }
 
     UserResponse entityToResponse(UserEntity userEntity);
+
+    UserEntity payloadToEntity(UserPayload payload);
 }

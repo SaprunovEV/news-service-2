@@ -1,9 +1,6 @@
 package com.example.newsservice2.user.input.web.v1.controller;
 
-import com.example.newsservice2.user.input.web.v1.model.UserFilter;
-import com.example.newsservice2.user.input.web.v1.model.UserListResponse;
-import com.example.newsservice2.user.input.web.v1.model.UserPayload;
-import com.example.newsservice2.user.input.web.v1.model.UserResponse;
+import com.example.newsservice2.user.input.web.v1.model.*;
 import com.example.newsservice2.user.mapper.UserMapper;
 import com.example.newsservice2.user.service.UserService;
 import jakarta.validation.Valid;
@@ -28,5 +25,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 mapper.entityToResponse(service.createUser(payload))
         );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser(@Valid UserId id, @RequestBody @Valid UserPayload payload) {
+        return ResponseEntity.ok(mapper.entityToResponse(service.updateUser(id.getId(), mapper.payloadToEntity(payload))));
     }
 }
