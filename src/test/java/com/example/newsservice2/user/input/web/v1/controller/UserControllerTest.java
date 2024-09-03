@@ -73,8 +73,8 @@ class UserControllerTest extends AbstractIntegrationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
 
-        String expected = StringTestUtils.readStringFromResources("/response/category/web/v1/find_by_filter_" + filter.getPageNumber() + "_response.json");
+        String expected = StringTestUtils.readStringFromResources("/response/user/web/v1/find_by_filter_" + filter.getPageNumber() + "_response.json");
 
-        JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("categories[*].id"));
+        JsonAssert.assertJsonEquals(expected, actual, JsonAssert.whenIgnoringPaths("users[*].id"));
     }
 }
