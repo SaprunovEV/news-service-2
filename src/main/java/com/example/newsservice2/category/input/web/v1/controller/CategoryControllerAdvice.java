@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.example.newsservice2.category.input.web.v1.controller")
 public class CategoryControllerAdvice {
     @ExceptionHandler(CategoryEntityNotFound.class)
     public ResponseEntity<CategoryErrorResponse> handleCategoryEntityNotFound(CategoryEntityNotFound ex) {
