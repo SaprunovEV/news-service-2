@@ -1,7 +1,6 @@
 package com.example.newsservice2.user.service;
 
 import com.example.newsservice2.user.input.web.v1.model.UserFilter;
-import com.example.newsservice2.user.input.web.v1.model.UserPayload;
 import com.example.newsservice2.user.model.UserEntity;
 import com.example.newsservice2.user.output.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +24,8 @@ public class DatabaseUserService implements UserService {
     }
 
     @Override
-    public UserEntity createUser(UserPayload payload) {
-        UserEntity toSave = new UserEntity();
-        toSave.setEmail(payload.getEmail());
-        toSave.setNickName(payload.getNickName());
-        return repository.save(toSave);
+    public UserEntity createUser(UserEntity payload) {
+        return repository.save(payload);
     }
 
     @Override

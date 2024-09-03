@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponse> createNewUser(@RequestBody @Valid UserPayload payload) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                mapper.entityToResponse(service.createUser(payload))
+                mapper.entityToResponse(service.createUser(mapper.payloadToEntity(payload)))
         );
     }
 

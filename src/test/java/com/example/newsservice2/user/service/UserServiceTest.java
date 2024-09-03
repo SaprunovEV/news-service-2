@@ -2,7 +2,6 @@ package com.example.newsservice2.user.service;
 
 import com.example.newsservice2.config.AbstractIntegrationTest;
 import com.example.newsservice2.user.input.web.v1.model.UserFilter;
-import com.example.newsservice2.user.input.web.v1.model.UserPayload;
 import com.example.newsservice2.user.model.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import static com.example.newsservice2.testUtils.testBuilder.UserTestDataBuilder.aUser;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -49,7 +47,7 @@ class UserServiceTest extends AbstractIntegrationTest {
 
     @Test
     void whenCreateNewUser_thenSaveNewUserToDatabase() throws Exception {
-        UserPayload payload = new UserPayload();
+        UserEntity payload = aUser().build();
 
         UserEntity result = service.createUser(payload);
 
@@ -79,12 +77,6 @@ class UserServiceTest extends AbstractIntegrationTest {
         });
     }
     private void assertUserEquals(UserEntity payload, UserEntity actual) {
-        assertAll(() -> {
-            assertEquals(payload.getNickName(), actual.getNickName());
-            assertEquals(payload.getEmail(), actual.getEmail());
-        });
-    }
-    private void assertUserEquals(UserPayload payload, UserEntity actual) {
         assertAll(() -> {
             assertEquals(payload.getNickName(), actual.getNickName());
             assertEquals(payload.getEmail(), actual.getEmail());
