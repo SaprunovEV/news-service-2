@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEnti
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTypeExcludeFilter;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -26,6 +27,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.stream.Stream;
 
 import static com.example.newsservice2.testUtils.testBuilder.UserTestDataBuilder.aUser;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -184,5 +187,24 @@ class UserControllerTest extends AbstractIntegrationTest {
                 readStringFromResources("/response/user/web/v1/error_pageSize_response.json");
 
         JsonAssert.assertJsonEquals(expected, actual);
+    }
+
+    @Test
+    void whenUserNotFound_thenReturnError() throws Exception {
+        UserPayload payload = new UserPayload();
+        payload.setEmail("test@email.test");
+        payload.setNickName("Vasya");
+
+        long id = Long.MAX_VALUE;
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/v1/user/{id}", id)
+                                .content(objectMapper.writeValueAsString(payload))
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse();
+
+        response.setCharacterEncoding("UTF-8");
+        assertNotNull(response.getContentAsString());
+        assertFalse(response.getContentAsString().trim().isEmpty());
     }
 }
