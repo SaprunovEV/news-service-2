@@ -1,4 +1,4 @@
-package com.example.newsservice2.user.input.web.v1.annotation;
+package com.example.newsservice2.user.input.web.v1.annotation.openApi;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -1,4 +1,4 @@
-package com.example.newsservice2.user.input.web.v1.annotation;
+package com.example.newsservice2.user.input.web.v1.annotation.openApi;
 
 import com.example.newsservice2.user.input.web.v1.model.UserErrorResponse;
 import com.example.newsservice2.user.input.web.v1.model.UserListResponse;

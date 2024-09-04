@@ -1,9 +1,9 @@
 package com.example.newsservice2.user.input.web.v1.controller;
 
-import com.example.newsservice2.user.input.web.v1.annotation.CreateNewUserDock;
-import com.example.newsservice2.user.input.web.v1.annotation.DeleteUserDock;
-import com.example.newsservice2.user.input.web.v1.annotation.GetPageUsersDock;
-import com.example.newsservice2.user.input.web.v1.annotation.UpdateUserDock;
+import com.example.newsservice2.user.input.web.v1.annotation.openApi.CreateNewUserDock;
+import com.example.newsservice2.user.input.web.v1.annotation.openApi.DeleteUserDock;
+import com.example.newsservice2.user.input.web.v1.annotation.openApi.GetPageUsersDock;
+import com.example.newsservice2.user.input.web.v1.annotation.openApi.UpdateUserDock;
 import com.example.newsservice2.user.input.web.v1.model.*;
 import com.example.newsservice2.user.mapper.UserMapper;
 import com.example.newsservice2.user.service.UserService;
