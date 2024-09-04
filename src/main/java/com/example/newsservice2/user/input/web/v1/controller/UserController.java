@@ -2,6 +2,7 @@ package com.example.newsservice2.user.input.web.v1.controller;
 
 import com.example.newsservice2.user.input.web.v1.annotation.CreateNewUserDock;
 import com.example.newsservice2.user.input.web.v1.annotation.GetPageUsersDock;
+import com.example.newsservice2.user.input.web.v1.annotation.UpdateUserDock;
 import com.example.newsservice2.user.input.web.v1.model.*;
 import com.example.newsservice2.user.mapper.UserMapper;
 import com.example.newsservice2.user.service.UserService;
@@ -34,6 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @UpdateUserDock
     public ResponseEntity<UserResponse> updateUser(@Valid UserId id, @RequestBody @Valid UserPayload payload) {
         return ResponseEntity.ok(mapper.entityToResponse(service.updateUser(id.getId(), mapper.payloadToEntity(payload))));
     }
