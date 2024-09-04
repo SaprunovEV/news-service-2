@@ -24,7 +24,7 @@ public class UserController {
     @GetMapping
     @GetPageUsersDock
     public ResponseEntity<UserListResponse> getAllUser(@Valid UserFilter filter) {
-        return ResponseEntity.ok(mapper.listEntitiesToResponseList(service.findAll(filter)));
+        return ResponseEntity.ok(mapper.listEntitiesToResponseList(service.findAll(filter.getPageNumber(), filter.getPageSize())));
     }
 
     @PostMapping
