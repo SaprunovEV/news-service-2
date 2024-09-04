@@ -1,7 +1,6 @@
 package com.example.newsservice2.user.service;
 
 import com.example.newsservice2.config.AbstractIntegrationTest;
-import com.example.newsservice2.user.input.web.v1.model.UserFilter;
 import com.example.newsservice2.user.model.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,7 @@ class UserServiceTest extends AbstractIntegrationTest {
         getFacade().save(aUser());
         getFacade().save(aUser());
 
-
-        UserFilter filter = new UserFilter();
-        filter.setPageNumber(0);
-        filter.setPageSize(3);
-
-        List<UserEntity> actual = service.findAll(filter);
+        List<UserEntity> actual = service.findAll(0, 3);
 
         assertAll(() -> {
             assertNotNull(actual);
