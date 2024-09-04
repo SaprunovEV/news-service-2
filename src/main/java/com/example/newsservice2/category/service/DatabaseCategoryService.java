@@ -1,7 +1,6 @@
 package com.example.newsservice2.category.service;
 
 import com.example.newsservice2.category.input.web.v1.model.CategoryFilter;
-import com.example.newsservice2.category.input.web.v1.model.CategoryPayload;
 import com.example.newsservice2.category.model.CategoryEntity;
 import com.example.newsservice2.category.output.repository.specification.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,25 +23,19 @@ public class DatabaseCategoryService implements CategoryService {
     }
 
     @Override
-    public CategoryEntity createNewCategory(CategoryPayload payload) {
-        CategoryEntity result = new CategoryEntity();
-        result.setName(payload.getName());
-        return repository.save(result);
+    public CategoryEntity createNewCategory(CategoryEntity payload) {
+        return repository.save(payload);
     }
 
     @Override
-    public CategoryEntity updateCategory(Long id, CategoryPayload payload) {
+    public CategoryEntity updateCategory(Long id, CategoryEntity payload) {
         Optional<CategoryEntity> optional = repository.findById(id);
-
-        CategoryEntity newEntity = new CategoryEntity();
-        newEntity.setName(payload.getName());
-
         if (optional.isEmpty()) {
             throw new CategoryEntityNotFound(MessageFormat.format("Категория с id: {0} не найдена!", id));
         }
         CategoryEntity oldEntity = optional.get();
 
-        oldEntity.update(newEntity);
+        oldEntity.update(payload);
 
         repository.save(oldEntity);
         return oldEntity;

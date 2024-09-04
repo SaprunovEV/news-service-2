@@ -1,6 +1,7 @@
 package com.example.newsservice2.category.mapper;
 
 import com.example.newsservice2.category.input.web.v1.model.CategoryListResponse;
+import com.example.newsservice2.category.input.web.v1.model.CategoryPayload;
 import com.example.newsservice2.category.input.web.v1.model.CategoryResponse;
 import com.example.newsservice2.category.model.CategoryEntity;
 import org.mapstruct.Mapper;
@@ -18,4 +19,6 @@ public interface CategoryMapper {
     }
 
     CategoryResponse entityToResponse(CategoryEntity categoryEntity);
+
+    CategoryEntity requestToEntity(CategoryPayload payload);
 }

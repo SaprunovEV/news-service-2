@@ -1,7 +1,6 @@
 package com.example.newsservice2.category.service;
 
 import com.example.newsservice2.category.input.web.v1.model.CategoryFilter;
-import com.example.newsservice2.category.input.web.v1.model.CategoryPayload;
 import com.example.newsservice2.category.model.CategoryEntity;
 import com.example.newsservice2.config.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
-import java.util.Random;
 
 import static com.example.newsservice2.testUtils.testBuilder.CategoryTestDataBuilder.aCategory;
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,8 +46,7 @@ class CategoryServiceTest extends AbstractIntegrationTest {
 
     @Test
     void whenCreateNewCategory_ThenSaveCategoryIntoDatabase_andReturnCategory() throws Exception {
-        CategoryPayload payload = new CategoryPayload();
-        payload.setName("new_category_name");
+        CategoryEntity payload = aCategory().withName("new_category_name").build();
 
         CategoryEntity actual = service.createNewCategory(payload);
 
@@ -65,9 +62,8 @@ class CategoryServiceTest extends AbstractIntegrationTest {
     @Test
     void whenUpdateCategory_thenSaveChange_andReturnUpdatedCategory() throws Exception {
         CategoryEntity oldCategory = getFacade().save(aCategory());
-        CategoryPayload payload = new CategoryPayload();
+        CategoryEntity payload = aCategory().withName("new_category_name").build();
 
-        payload.setName("new_category_name");
         CategoryEntity actual = service.updateCategory(oldCategory.getId(), payload);
 
         assertAll(() -> {
@@ -80,10 +76,9 @@ class CategoryServiceTest extends AbstractIntegrationTest {
 
     @Test
     void whenUpdateCategory_andCategoryIsNotExists_ThrowError() throws Exception {
-        CategoryPayload payload = new CategoryPayload();
-        payload.setName("new_category_name");
+        CategoryEntity payload = aCategory().withName("new_category_name").build();
 
-        long id = new Random().nextLong();
+        long id = Long.MAX_VALUE;
 
         assertThrows(CategoryEntityNotFound.class, () -> service.updateCategory(id, payload));
         assertNull(getFacade().find(id, CategoryEntity.class));
