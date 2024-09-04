@@ -1,5 +1,6 @@
 package com.example.newsservice2.user.input.web.v1.controller;
 
+import com.example.newsservice2.user.input.web.v1.annotation.CreateNewUserDock;
 import com.example.newsservice2.user.input.web.v1.annotation.GetPageUsersDock;
 import com.example.newsservice2.user.input.web.v1.model.*;
 import com.example.newsservice2.user.mapper.UserMapper;
@@ -25,6 +26,7 @@ public class UserController {
     }
 
     @PostMapping
+    @CreateNewUserDock
     public ResponseEntity<UserResponse> createNewUser(@RequestBody @Valid UserPayload payload) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 mapper.entityToResponse(service.createUser(mapper.payloadToEntity(payload)))
