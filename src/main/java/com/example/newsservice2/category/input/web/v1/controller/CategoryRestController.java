@@ -35,7 +35,7 @@ public class CategoryRestController {
     @CreateCategoryDock
     public ResponseEntity<CategoryResponse> createCategory(@RequestBody @Valid CategoryPayload payload) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                mapper.entityToResponse(service.createNewCategory(payload))
+                mapper.entityToResponse(service.createNewCategory(mapper.requestToEntity(payload)))
         );
     }
 
@@ -44,7 +44,7 @@ public class CategoryRestController {
     public ResponseEntity<CategoryResponse> updateCategory(
             @Valid CategoryId id,
             @RequestBody @Valid CategoryPayload payload) {
-        return ResponseEntity.ok(mapper.entityToResponse(service.updateCategory(id.getId(), payload)));
+        return ResponseEntity.ok(mapper.entityToResponse(service.updateCategory(id.getId(), mapper.requestToEntity(payload))));
     }
 
     @DeleteMapping("/{id}")
