@@ -1,6 +1,7 @@
 package com.example.newsservice2.user.input.web.v1.controller;
 
 import com.example.newsservice2.user.input.web.v1.annotation.CreateNewUserDock;
+import com.example.newsservice2.user.input.web.v1.annotation.DeleteUserDock;
 import com.example.newsservice2.user.input.web.v1.annotation.GetPageUsersDock;
 import com.example.newsservice2.user.input.web.v1.annotation.UpdateUserDock;
 import com.example.newsservice2.user.input.web.v1.model.*;
@@ -41,6 +42,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @DeleteUserDock
     public ResponseEntity<Void> deleteUser(@Valid UserId id) {
         service.deleteUser(id.getId());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
