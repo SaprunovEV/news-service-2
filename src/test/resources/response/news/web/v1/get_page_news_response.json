@@ -1,0 +1,36 @@
+{
+  "count": 3,
+  "news": [
+    {
+      "id": 1,
+      "count": 0,
+      "topic": "test1",
+      "body": "test1",
+      "author": 1,
+      "categories": [1,2,3],
+      "createAt": "asda",
+      "updateAt": "adjhgaidjya"
+    },
+    {
+      "id": 1,
+      "count": 0,
+      "topic": "test2",
+      "body": "test2",
+      "author": 1,
+      "categories": [1,2,3],
+      "createAt": "asda",
+      "updateAt": "adjhgaidjya"
+    },
+    {
+      "id": 1,
+      "count": 1,
+      "topic": "test3",
+      "body": "test3",
+      "author": 1,
+      "categories": [1,2,3],
+      "comments": [],
+      "createAt": "asda",
+      "updateAt": "adjhgaidjya"
+    }
+  ]
+}

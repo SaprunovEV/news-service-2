@@ -13,7 +13,7 @@ import java.util.List;
 public class NewsItem {
     private long id;
     private int count;
-    private String title;
+    private String topic;
     private String body;
     private long author;
     private Instant createAt;
