@@ -3,12 +3,13 @@ package com.example.newsservice2.testUtils.testBuilder;
 import com.example.newsservice2.news.model.CommentEntity;
 import com.example.newsservice2.news.model.NewsEntity;
 import com.example.newsservice2.testUtils.TestDataBuilder;
+import com.example.newsservice2.user.model.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewsTestDataBuilder implements TestDataBuilder<NewsEntity> {
-    private Long author = 1L;
+    private TestDataBuilder<UserEntity> author = UserEntity::new;
     private List<TestDataBuilder<CommentEntity>> comments = new ArrayList<>();
     private String topic = "News test topic";
     private String body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -16,7 +17,7 @@ public class NewsTestDataBuilder implements TestDataBuilder<NewsEntity> {
     private NewsTestDataBuilder() {}
 
     private NewsTestDataBuilder(
-            Long author,
+            TestDataBuilder<UserEntity> author,
             List<TestDataBuilder<CommentEntity>> comments,
             String topic,
             String body) {
@@ -30,7 +31,7 @@ public class NewsTestDataBuilder implements TestDataBuilder<NewsEntity> {
         return new NewsTestDataBuilder();
     }
 
-    public NewsTestDataBuilder withAuthor(Long author) {
+    public NewsTestDataBuilder withAuthor(TestDataBuilder<UserEntity> author) {
         return new NewsTestDataBuilder(author, comments, topic, body);
     }
 
@@ -52,7 +53,8 @@ public class NewsTestDataBuilder implements TestDataBuilder<NewsEntity> {
 
         result.setTopic(topic);
         result.setBody(body);
-        result.setAuthor(author);
+        UserEntity build = author.build();
+        result.setAuthor(build);
         result.setComment(getEntityCollection(comments, c -> c.setNews(result)));
 
         return result;
