@@ -23,8 +23,8 @@ public class NewsEntity {
     private Instant updateAt;
     @OneToMany
     private List<CommentEntity> comment;
-    @ManyToOne(targetEntity = UserEntity.class)
-    private Long author;
+    @ManyToOne
+    private UserEntity author;
 
     @PrePersist
     public void persist() {
