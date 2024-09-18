@@ -6,7 +6,7 @@
       "count": 0,
       "topic": "test1",
       "body": "test1",
-      "author": 1,
+      "author": {"id":1,"nickName":"Vasya","email":"vasya@emai.test"},
       "categories": [1,2,3],
       "createAt": "asda",
       "updateAt": "adjhgaidjya"
@@ -16,7 +16,7 @@
       "count": 0,
       "topic": "test2",
       "body": "test2",
-      "author": 1,
+      "author": {"id":1,"nickName":"Vasya","email":"vasya@emai.test"},
       "categories": [1,2,3],
       "createAt": "asda",
       "updateAt": "adjhgaidjya"
@@ -26,7 +26,7 @@
       "count": 1,
       "topic": "test3",
       "body": "test3",
-      "author": 1,
+      "author": {"id":1,"nickName":"Vasya","email":"vasya@emai.test"},
       "categories": [1,2,3],
       "comments": [],
       "createAt": "asda",
