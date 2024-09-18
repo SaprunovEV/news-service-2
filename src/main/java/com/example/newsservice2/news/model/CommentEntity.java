@@ -14,5 +14,6 @@ public class CommentEntity {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "news_id")
     private NewsEntity news;
 }

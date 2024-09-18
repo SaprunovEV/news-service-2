@@ -21,7 +21,7 @@ public class NewsEntity {
     private String body;
     private Instant createAt;
     private Instant updateAt;
-    @OneToMany
+    @OneToMany(mappedBy = "news")
     private List<CommentEntity> comment;
     @ManyToOne
     private UserEntity author;
