@@ -1,5 +1,6 @@
 package com.example.newsservice2.news.input.web.v1.model;
 
+import com.example.newsservice2.user.input.web.v1.model.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class NewsItem {
     private int count;
     private String topic;
     private String body;
-    private long author;
+    private UserResponse author;
     private Instant createAt;
     private Instant updateAt;
     private List<Long> categories;
