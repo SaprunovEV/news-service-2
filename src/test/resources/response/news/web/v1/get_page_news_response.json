@@ -28,7 +28,6 @@
       "body": "test3",
       "author": {"id":1,"nickName":"Vasya","email":"vasya@emai.test"},
       "categories": [1,2,3],
-      "comments": [],
       "createAt": "asda",
       "updateAt": "adjhgaidjya"
     }
