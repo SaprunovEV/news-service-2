@@ -18,6 +18,7 @@ public class NewsEntity {
     private Long id;
 
     private String topic;
+    @Column(length = 500)
     private String body;
     private Instant createAt;
     private Instant updateAt;
