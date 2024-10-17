@@ -55,7 +55,7 @@ public class NewsTestDataBuilder implements TestDataBuilder<NewsEntity> {
         result.setBody(body);
         UserEntity build = author.build();
         result.setAuthor(build);
-        result.setComment(getEntityCollection(comments, c -> c.setNews(result)));
+        result.setComments(getEntityCollection(comments, c -> c.setNews(result)));
 
         return result;
     }
