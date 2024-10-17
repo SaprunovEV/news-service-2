@@ -23,7 +23,7 @@ public class NewsEntity {
     private Instant createAt;
     private Instant updateAt;
     @OneToMany(mappedBy = "news")
-    private List<CommentEntity> comment;
+    private List<CommentEntity> comments;
     @ManyToOne
     private UserEntity author;
 
