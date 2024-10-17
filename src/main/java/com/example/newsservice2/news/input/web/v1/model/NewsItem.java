@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class NewsItem {
     private long id;
-    private int count;
+    private long count;
     private String topic;
     private String body;
     private UserResponse author;
