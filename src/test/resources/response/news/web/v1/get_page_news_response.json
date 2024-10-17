@@ -23,7 +23,7 @@
     },
     {
       "id": 1,
-      "count": 1,
+      "count": 0,
       "topic": "test3",
       "body": "test3",
       "author": {"id":1,"nickName":"Vasya","email":"vasya@emai.test"},
