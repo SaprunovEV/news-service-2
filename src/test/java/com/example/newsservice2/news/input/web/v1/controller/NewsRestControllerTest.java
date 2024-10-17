@@ -53,11 +53,7 @@ class NewsRestControllerTest extends AbstractIntegrationTest {
 
     @Test
     void whenGetAll_thenReturnPageOfNewsWithCountComments() throws Exception {
-        TestDataBuilder<UserEntity> userId = getFacade().persistedOnce(UserTestDataBuilder.aUser());
-        getFacade().save(aNews().withAuthor(userId).withBody("test1").withTopic("test1"));
-        getFacade().save(aNews().withAuthor(userId).withBody("test2").withTopic("test2"));
-        getFacade().save(aNews().withAuthor(userId).withBody("test3").withTopic("test3"));
-        getFacade().save(aNews().withAuthor(userId).withBody("test4").withTopic("test4"));
+        preparedData();
 
         String actual = mvc.perform(
                         get("/api/v1/news")
@@ -72,5 +68,13 @@ class NewsRestControllerTest extends AbstractIntegrationTest {
                 expected,
                 actual,
                 JsonAssert.whenIgnoringPaths("news[*].id", "news[*].author", "news[*].categories", "news[*].createAt", "news[*].updateAt"));
+    }
+    private Long preparedData() {
+        TestDataBuilder<UserEntity> userId = getFacade().persistedOnce(UserTestDataBuilder.aUser());
+        Long id = getFacade().save(aNews().withAuthor(userId).withBody("test1").withTopic("test1")).getId();
+        getFacade().save(aNews().withAuthor(userId).withBody("test2").withTopic("test2"));
+        getFacade().save(aNews().withAuthor(userId).withBody("test3").withTopic("test3"));
+        getFacade().save(aNews().withAuthor(userId).withBody("test4").withTopic("test4"));
+        return id;
     }
 }
