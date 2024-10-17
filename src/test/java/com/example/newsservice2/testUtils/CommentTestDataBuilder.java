@@ -25,7 +25,7 @@ public class CommentTestDataBuilder implements TestDataBuilder<CommentEntity> {
     public CommentEntity build() {
         CommentEntity result = new CommentEntity();
         NewsEntity newsEntity = news.build();
-        newsEntity.getComment().add(result);
+        newsEntity.getComments().add(result);
         result.setNews(newsEntity);
         return result;
     }
